@@ -26,6 +26,15 @@
 
 .App-link {
   color: #61dafb;
+} 
+
+.area-ms {
+  background-color:dimgrey;
+  font-family:'Courier New', Courier, monospace;
+}
+.area-ms:hover {
+  cursor: pointer;
+  color: #61dafb;
 }
 
 @keyframes App-logo-spin {
