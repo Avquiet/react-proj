@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { authors } from "../utils/constants";
+import TextField from "@mui/material/TextField";
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
 
-export const Msgl = ({ onlyMessages }) => {
+export const GoodMessages = ({ onlyMessages }) => {
     const [value, setValue] = useState([]);
-
+    const inputFocus = useRef();
 
     const handleChange = (event) => {
         setValue(event.target.value);
@@ -12,17 +15,25 @@ export const Msgl = ({ onlyMessages }) => {
         onlyMessages({
             author: authors.user,
             text: value,
-            id: `msg-${Date.now()}`
+            id: `list-${Date.now()}`
         })
         event.preventDefault()
 
         setValue('');
+
     }
+    inputFocus.current?.focus();
 
     return( 
         <form className="area-form" onSubmit={handleSubmit}>      
-            <input className="area-put" value={value} onChange={handleChange} />
-            <button type="submit" className="area-subms">Send message</button>
+            <TextField
+             value={value}
+             onChange={handleChange}
+             id="filled-basic"
+             label="Enter your message"
+             inputRef={inputFocus}
+             variant="filled" />
+            <Button variant="contained" endIcon={<SendIcon />} type="submit">Send</Button>
         </form>
     )
 

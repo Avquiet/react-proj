@@ -1,9 +1,10 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import './App.css';
-import { Msgl } from './components/Forms';
+import { GoodMessages } from './components/Forms';
 import { MessageList } from './components/Message';
-import { authors } from './utils/constants.js'
+import { authors } from './utils/constants.js';
+import  { RenderChats } from './components/ChatLists'
 
 function App() {
 
@@ -25,7 +26,7 @@ function App() {
       const isTime = setTimeout(() => handleSendMsg({
         author: authors.bot,
         text: "Hello dear USER please write any message",
-        id: `msg-${Date.now()}`
+        id: `list-${Date.now()}`
       }),
       2500);
       
@@ -37,9 +38,15 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <MessageList messages={msg}/>
-      <Msgl onlyMessages={handleSendMsg}/>
+        <div className="item-chat">
+            <h3 className="text-list">Chat List</h3>
+            <RenderChats />
+        </div> 
+            <MessageList messages={msg}/>
       </header>
+      <main className="App-main">
+        <GoodMessages onlyMessages={handleSendMsg}/>
+      </main>
     </div>
   );
 }
