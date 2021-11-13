@@ -1,0 +1,117 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* .App {
+    text-align: center;
+  } */
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  
+  .App-header {
+    min-height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    background-color:lightskyblue;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-main {
+    background-color:lightskyblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+
+  .chat-load {
+    text-decoration: none;
+    color: teal;
+  }
+
+  .chat-load:hover {
+    color: teal;
+  }  
+  
+  .child-list:hover {
+    cursor: pointer;
+    background-color:lightgrey;
+  }
+  
+  
+  .area-ms {
+    background-color:dimgrey;
+    font-family:'Courier New', Courier, monospace;
+  }
+  .area-ms:hover {
+    cursor: pointer;
+    color: #61dafb;
+  }
+  
+  .msg-list {
+    margin-right: 50px;
+  }
+  
+  .text-list {
+    margin-left: 15px;
+    margin-bottom: 10px; 
+  }
+  
+  .area-subms:hover {
+    color: #3498db;
+    background: lightgray;
+    cursor: pointer;
+  }
+  
+  .area-form {
+    margin-top: 20px;
+    display: flex;
+  }
+  
+  .list-text {
+    width: 155px;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 20px;
+    background-color: #3498db;
+    margin-top: 20px;
+    border-radius: 0.99rem;
+  }
+
+  .other-but {
+    background-color:#3498db;
+    border: none;
+    padding: 8px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    border-radius: 0.99rem;
+    cursor: pointer;
+    color: white;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

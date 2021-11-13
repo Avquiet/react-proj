@@ -12,22 +12,23 @@ export const GoodMessages = ({ onlyMessages }) => {
         setValue(event.target.value);
     }
     const handleSubmit = (event) => {
+        event.preventDefault()
         onlyMessages({
             author: authors.user,
             text: value,
             id: `list-${Date.now()}`
         })
-        event.preventDefault()
 
         setValue('');
+    }        
 
-    }
     inputFocus.current?.focus();
 
     return( 
         <form className="area-form" onSubmit={handleSubmit}>      
             <TextField
              value={value}
+             autoFocus
              onChange={handleChange}
              id="filled-basic"
              label="Enter your message"
