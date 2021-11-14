@@ -48,22 +48,26 @@ export const RenderChats = () => {
             {listOfChat.map((roster) => (
                 <List className="child-list" key={ uuid() } sx={{
                     textDecoration: 'none',
-                    border: '2px solid teal',
+                    border: '1px solid teal',
                     marginBottom: '4px',
-                    borderLeft: 'none'
+                    borderLeft: 'none',
+                    height: '80px',
                     }}>
                     <>
                         <ListItem>
-                            <NavLink className="chat-load" to={`/chats/${roster.id}`}>
+                            <NavLink 
+                              className="chat-load"
+                              to={`/chats/${roster.id}`}
+                              style={({ isActive }) => ({ color: isActive ? "grey" : "teal" })}>
                                 <ListItemText primary={roster.name}  secondary='another'/>
                             </NavLink>
+                            <button
+                                className="other-but"
+                                removeItem={removeItem} 
+                                onClick={ () => removeItem(roster.id)} 
+                                >Delete
+                            </button>
                         </ListItem>
-                        <button
-                            className="other-but"
-                            removeItem={removeItem} 
-                            onClick={ () => removeItem(roster.id)} 
-                            >Delete
-                        </button>
                     </>      
                 </List>
             ))}

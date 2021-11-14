@@ -43,12 +43,7 @@
 
   .chat-load {
     text-decoration: none;
-    color: teal;
-  }
-
-  .chat-load:hover {
-    color: teal;
-  }  
+  } 
   
   .child-list:hover {
     cursor: pointer;
@@ -104,6 +99,26 @@
     border-radius: 0.99rem;
     cursor: pointer;
     color: white;
+  }
+
+  .hash-main {
+    list-style-type: none;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    border-bottom: 1px solid lightskyblue;
+  }
+
+  .hash-child {
+    color: white;
+    padding: 10px;
+    background-color:#3498db;
+    text-decoration: none;
+  }
+
+  .hash-child:hover {
+    color:brown;
   }
   
   @keyframes App-logo-spin {

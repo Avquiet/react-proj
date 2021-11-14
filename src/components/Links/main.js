@@ -2,15 +2,15 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 export const LinkItem = () => {
-    return <ul>
+    return <ul className="hash-main">
     <li>
-        <Link to="/">Home</Link>
+        <Link className="hash-child" to="/">Home</Link>
     </li>
     <li>
-        <Link to="/chats">Chats</Link>
+        <Link className="hash-child" to="/chats">Chats</Link>
     </li>
     <li>
-        <Link to="/profile">Profile</Link>
+        <Link className="hash-child" to="/profile">Profile</Link>
     </li>
 </ul>
 }
