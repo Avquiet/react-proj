@@ -8,11 +8,11 @@ export const GoodMessages = ({ onlyMessages }) => {
     const [value, setValue] = useState([]);
     const inputFocus = useRef();
 
-    const handleChange = (event) => {
-        setValue(event.target.value);
+    const handleChange = (e) => {
+        setValue(e.target.value);
     }
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const handleSubmit = (e) => {
+        e.preventDefault()
         onlyMessages({
             author: authors.user,
             text: value,
@@ -34,7 +34,7 @@ export const GoodMessages = ({ onlyMessages }) => {
              label="Enter your message"
              inputRef={inputFocus}
              variant="filled" />
-            <Button variant="contained" endIcon={<SendIcon />} type="submit">Send</Button>
+            <Button variant="contained" endIcon={<SendIcon />} disabled={!value} type="submit">Send</Button>
         </form>
     )
 

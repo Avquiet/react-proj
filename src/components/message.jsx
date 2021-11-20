@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useRef } from 'react'
+import {v4 as uuid} from 'uuid';
 
  export const MessageList = ({ messages }) => {
 
@@ -15,8 +16,8 @@ import { useEffect, useRef } from 'react'
 
     return (
         <div>
-            {messages.map((list, id) => (
-                <div className="msg-list" key={id}>
+            {messages.map((list) => (
+                <div className="msg-list" key={ uuid() }>
                     <p className="author-text">{list.author}</p>
                     <p className="list-text">{list.text}</p>
                 </div>

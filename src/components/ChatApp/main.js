@@ -1,59 +1,27 @@
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import './chat.css';
+import { connect } from 'react-redux'
 import { GoodMessages } from '../Forms';
-import { MessageList } from '../Message';
+import { MessageList } from '../message';
 import { authors } from '../../utils/constants';
 import { RenderChats } from '../ChatList/main';
 import { Navigate, useParams } from "react-router";
+import { addMessage } from "../../store/messages/actions";
 
-const initialMessages = {
-  c1: [
-    {
-      author: authors.user,
-      text: 'Hello, welcome to the group-1'
-    }
-  ],
-  c2: [
-    {
-      author: authors.user,
-      text: 'Hello, welcome to the group-2'
-    }
-  ],
-  c3: [
-    {
-      author: authors.user,
-      text: 'Hello, welcome to the group-3'
-    }
-  ],
-  c4: [
-    {
-      author: authors.user,
-      text: 'Hello, welcome to the group-4'
-    }
-  ],
-  c5: [
-    {
-      author: authors.user,
-      text: 'Hello, welcome to the group-5'
-    }
-  ]
-};
-
-function Chat() {
+function Chat({ messages, sendMessage }) {
 
   const { chatId } = useParams();
-
-  const [messages, setMessages] = useState(initialMessages);
-
-  const handleSendMessage = useCallback (
+  const handleSendMessage = useCallback(
     (newMessage) => {
-      setMessages((prevMessages) => ({
-        ...prevMessages,
-        [chatId]: [...prevMessages[chatId], newMessage],
-      }));
-    }, [chatId]
-  );   
+
+      
+      sendMessage(chatId, newMessage);
+    },
+    [chatId, sendMessage]
+  );
+
+  
   useEffect(() => {
     if (messages[chatId]?.length && messages[chatId]?.[messages[chatId]?.length - 1].author !== authors.bot) {
 
@@ -66,8 +34,8 @@ function Chat() {
       
       return () => clearTimeout(timeout);
     };
-    
-  });
+  
+  }, [messages]);
 
   if (!messages[chatId]) {
     return <Navigate replace to="/chats/" />
@@ -90,3 +58,17 @@ function Chat() {
 }
 
 export default Chat;
+
+
+const mapStateToProps = (state) => ({
+  messages: state.messages,
+});
+
+const mapDispatchToProps = {
+  sendMessage: addMessage,
+};
+
+export const ConnectedChats = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Chat);
