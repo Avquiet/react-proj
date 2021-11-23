@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addChat } from "../../store/chats/actions";
 import { selectChats } from "../../store/chats/selectors";
 import List from '@mui/material/List';
-import { ListItem, TextField, Button } from '@mui/material';
+import { ListItem, TextField, Button, Dialog, DialogTitle } from '@mui/material';
 import { ChatItem } from "../ChatItem/main";
 
 
@@ -15,18 +15,22 @@ export const RenderChats = () => {
     const dispatch = useDispatch()
     const [value, setValue] = useState("");
     
-    const handleChange = (e) => {
-        setValue(e.target.value);
-    };
+    
     const handleSubmit = (e) => {
         e.preventDefault()
-
-        const newId = `chat${Date.now()}`;
-        dispatch(addChat({ name: value, id: newId }));
-    
-        setValue("");
     }
 
+
+    const [visible, setVisible] = useState(false);
+    const handleClose = () => setVisible(false);
+    const handleOpen = () => setVisible(true);
+    const handleChange = (e) => setValue(e.target.value);
+    const onAddChat = () => {
+        const newId = `chat${Date.now()}`;
+        dispatch(addChat({ name: value, id: newId }));
+        setValue("");
+        handleClose()
+    }
     return (
         <div>
             {chatList.map((chat) => (
@@ -42,11 +46,18 @@ export const RenderChats = () => {
                         </ListItem>      
                 </List>
             ))}
-
+            <Button variant="contained" onClick={handleOpen}>
+                Add the new chat
+            </Button>
             <form onSubmit={handleSubmit}>
-                <TextField value={value} onChange={handleChange} />
-                <Button variant='contained' type="submit" className="other-but" disabled={!value}>Add chat</Button>
+                <Dialog open={visible} onClose={handleClose}>
+                    <DialogTitle>Please enter a name for new chat</DialogTitle>
+                    <TextField autoFocus value={value} onChange={handleChange} />
+                    <Button variant="contained" type="submit" onClick={onAddChat} disabled={!value}>
+                        ADD
+                    </Button>
+                </Dialog>
             </form>
         </div>
-    ) 
+    )
 }

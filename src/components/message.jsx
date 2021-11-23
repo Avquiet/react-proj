@@ -21,6 +21,7 @@ import {v4 as uuid} from 'uuid';
                     <p className="author-text">{list.author}</p>
                     <p className="list-text">{list.text}</p>
                 </div>
+                
             ))}
             <div ref={messagesEndRef} />
         </div>

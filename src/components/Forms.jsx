@@ -24,6 +24,7 @@ export const GoodMessages = ({ onlyMessages }) => {
 
     inputFocus.current?.focus();
 
+
     return( 
         <form className="area-form" onSubmit={handleSubmit}>      
             <TextField

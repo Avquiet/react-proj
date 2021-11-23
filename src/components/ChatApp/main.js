@@ -1,41 +1,22 @@
 
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import './chat.css';
 import { connect } from 'react-redux'
 import { GoodMessages } from '../Forms';
 import { MessageList } from '../message';
-import { authors } from '../../utils/constants';
 import { RenderChats } from '../ChatList/main';
 import { Navigate, useParams } from "react-router";
-import { addMessage } from "../../store/messages/actions";
+import { addMessageWithThunk } from "../../store/messages/actions";
 
 function Chat({ messages, sendMessage }) {
 
   const { chatId } = useParams();
   const handleSendMessage = useCallback(
-    (newMessage) => {
-
-      
+    (newMessage) => { 
       sendMessage(chatId, newMessage);
     },
     [chatId, sendMessage]
   );
-
-  
-  useEffect(() => {
-    if (messages[chatId]?.length && messages[chatId]?.[messages[chatId]?.length - 1].author !== authors.bot) {
-
-      const timeout = setTimeout(() => handleSendMessage({
-        author: authors.bot,
-        text: "Hello dear USER please write any message",
-        id: `list-${Date.now()}`
-      }),
-      2500);
-      
-      return () => clearTimeout(timeout);
-    };
-  
-  }, [messages]);
 
   if (!messages[chatId]) {
     return <Navigate replace to="/chats/" />
@@ -65,7 +46,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  sendMessage: addMessage,
+  sendMessage: addMessageWithThunk,
 };
 
 export const ConnectedChats = connect(

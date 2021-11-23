@@ -3,7 +3,7 @@ import { BrowserRouter, Link } from "react-router-dom";
 import { RenderChats } from "../ChatList/main";
 import { ConnectedChats } from "../ChatApp/main";
 import { Home } from "../Home/main";
-import { Profile } from "../Profile/main"
+import { ConnectedProfile } from "../Profile/main";
 
 export const LinkItem = () => (
     
@@ -25,7 +25,7 @@ export const LinkItem = () => (
                 <Route index element={ <RenderChats /> } />
                 <Route path=":chatId" element={ <ConnectedChats />} />
             </Route>
-            <Route path="/profile" element={ <Profile />} />
+            <Route path="/profile" element={ <ConnectedProfile />} />
             <Route path="*" element={
                 <h3>Page Not Found
                 <h1>404</h1>

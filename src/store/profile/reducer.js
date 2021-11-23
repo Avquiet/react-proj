@@ -1,16 +1,15 @@
-import { TOGGLE_CHECKBOX } from "./actions";
+import { CHANGE_NAME } from "./actions";
 
 const initialState = {
-    checkbox: false,
     name: 'Default'
 };
 
 export const profileReducer = (state = initialState, action) => {
     switch (action.type) {
-        case TOGGLE_CHECKBOX:
+        case CHANGE_NAME:
             return {
                 ...state, 
-                checkbox: !state.checkbox
+                name: action.payload
             };
             default: 
             return state;
