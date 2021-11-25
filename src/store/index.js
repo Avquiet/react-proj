@@ -5,13 +5,14 @@ import { messagesReducer } from "./messages/reducer";
 import thunk from "redux-thunk";
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'
-
+import { articlesReducer } from "./articles/reducers";
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
   const config = {
     key: 'root', 
-    storage
+    storage,
+    blacklist: ["articles"],
   }
 
   const persistedReducer = persistReducer(
@@ -19,7 +20,8 @@ import storage from 'redux-persist/lib/storage'
     combineReducers({
       chats: chatsReducer,
       profile: profileReducer,
-      messages: messagesReducer
+      messages: messagesReducer,
+      articles: articlesReducer
     }),
     );
 
