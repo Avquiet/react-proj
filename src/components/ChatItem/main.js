@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux"
 import { deleteChat } from "../../store/chats/actions";
 import { Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
 import { useState } from "react";
+import { deleteChatWithFb } from "../../store/chats/actions";
 
 
 export const ChatItem = ({ chat }) => {
@@ -15,7 +16,7 @@ export const ChatItem = ({ chat }) => {
 
 
   const handleDeleteClick = () => {
-    dispatch(deleteChat(chat.id))
+    dispatch(deleteChatWithFb(chat.id))
     handleClose()
   };
 

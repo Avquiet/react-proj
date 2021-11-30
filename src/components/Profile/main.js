@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector, connect, shallowEqual } from 'react-redux';
 import { selectName } from "../../store/profile/selectors";
-import { changeName } from '../../store/profile/actions'
+import { changeName, signOut } from '../../store/profile/actions'
 import { Button, TextField } from '@mui/material';
+import { onValue, set } from "firebase/database";
+import { logOut, userRef } from "../../services/firebase";
 
-export const Profile = ({ setName }) => {
+export const Profile = ({ setName, changeChecked }) => {
 
     const name = useSelector(selectName, shallowEqual);
     const [value, setValue] = useState(name);
@@ -15,17 +17,36 @@ export const Profile = ({ setName }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setName(value);
+        set(userRef, {
+          name: value,
+        })
       };
+
+    useEffect(() => {
+      const unsubscribe = onValue(userRef, (snapshot) => {
+        const userData = snapshot.val();
+        setName(userData?.name || "");
+       });
+
+       return unsubscribe;
+    }, [setName]);
+
+    const handleLogOutClick = async () => {
+      try {
+        await logOut();
+      } catch (err) {
+        console.log(err)
+      }
+    };
 
     return (
     <>
-       <div>
+       <h3>Welcome to Profile</h3>
        <form onSubmit={handleSubmit}>
-        <TextField type="text" value={value} onChange={handleChangeText}></TextField>
-        <Button variant="contained" type='submit' disabled={!value}>Save!</Button>
+        <TextField type="text" value={value} onChange={handleChangeText} ></TextField>
+        <TextField type="submit"></TextField>
       </form>
-       </div>
+      <Button onClick={handleLogOutClick}>SIGN OUT</Button>
     </>
     )
 }
@@ -34,9 +55,9 @@ const mapStateToProps = (state) => ({
     name: state.profile.name
 });
 
-const mapDispatchToProps = {
-    setName: changeName
-}
+const mapDispatchToProps = (dispatch)  => ({
+  setName: (newName) => dispatch(changeName(newName))
+});
 
 export const ConnectedProfile = connect(
     mapStateToProps,

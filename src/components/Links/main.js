@@ -5,10 +5,48 @@ import { ConnectedChats } from "../ChatApp/main";
 import { Home } from "../Home/main";
 import { Articles } from "../Articles/main";
 import { ConnectedProfile } from "../Profile/main";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { onValue } from "firebase/database";
+import { PrivateRoute } from "../PrivateRoute/main";
+import { PublicOutlet, PublicRoute } from "../PublicRoute/main";
+import { auth, messagesRef } from "../../services/firebase";
+import { signIn, signOut } from "../../store/profile/actions";
+import { SignUp } from "../SignUp/main";
 
-export const LinkItem = () => (
+export const LinkItem = () => {
+    const dispatch = useDispatch();
+    const [msgs, setMsgs] = useState({});
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                dispatch(signIn());
+            } else {
+                dispatch(signOut());
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+
+    useEffect(() => {
+        onValue(messagesRef, (snapshot) => {
+            const newMsgs = {};
+
+            snapshot.forEach((chatMsgsSnap) => {
+                newMsgs[chatMsgsSnap.key] = Object.values(
+                    chatMsgsSnap.val().messageList || {}
+                );
+            });
+
+            setMsgs(newMsgs);
+        });
+    }, []);
     
-    <BrowserRouter>
+    return (
+        <BrowserRouter>
         <ul className="hash-main">
             <li>
                 <Link className="hash-child" to="/">Home</Link>
@@ -24,17 +62,42 @@ export const LinkItem = () => (
             </li>
         </ul>
         <Routes>
-            <Route path="/" element={ <Home /> } />
-            <Route path="articles" element={<Articles />} />
-            <Route path="chats">
-                <Route index element={ <RenderChats /> } />
-                <Route path=":chatId" element={ <ConnectedChats />} />
-            </Route>
-            <Route path="/profile" element={ <ConnectedProfile />} />
-            <Route path="*" element={
-                <h3>Page Not Found
-                <h1>404</h1>
-                </h3>} />
-        </Routes>
+            <Route path="/" element={<PublicOutlet />}>
+            <Route path="" element={<Home />} />
+        </Route>
+        <Route path="/signup" element={<PublicOutlet />}>
+          <Route path="" element={<SignUp />} />
+        </Route>
+        <Route
+          path="profile"
+          element={
+            <PrivateRoute>
+              <ConnectedProfile />
+            </PrivateRoute>
+          }
+        />
+        <Route path="articles" element={<Articles />} />
+        <Route path="chats">
+          <Route
+            index
+            element={
+              <PrivateRoute>
+                <RenderChats />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path=":chatId"
+            element={
+              <PrivateRoute>
+                <ConnectedChats msgs={msgs} />
+              </PrivateRoute>
+            }
+          />
+        </Route>
+        <Route path="*" element={<h3>404</h3>} />
+      </Routes>
     </BrowserRouter>
-);
+
+    )
+};

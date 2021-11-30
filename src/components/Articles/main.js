@@ -1,4 +1,4 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,6 +7,8 @@ import {
   selectArticlesLoading,
 } from "../../store/articles/selectors";
 import { getArticles } from "../../store/articles/actions";
+import { Button } from '@mui/material';
+import '../../App.css'
 
 export const Articles = () => {
     const dispatch = useDispatch();
@@ -15,7 +17,7 @@ export const Articles = () => {
     const error = useSelector(selectArticlesError);
 
     const requestArticles = async () => {
-        dispatch(getArticles())
+        dispatch(getArticles());
     };
 
     useEffect(() => {
@@ -23,13 +25,13 @@ export const Articles = () => {
     }, []);
 
     return (
-        <>
+        <div className="articles-main">
             <h3>Articles</h3>
             {isLoading ? (
                 <CircularProgress />
             ) : (
                 <>
-                    <button onclick={requestArticles}>REQUEST</button>
+                    <Button variant="outlined" onclick={requestArticles}>REQUEST</Button>
                     {!!error && <h4>ERROR: {error}</h4>}
                     <ul>
                         {articles.map((art) => (
@@ -38,6 +40,6 @@ export const Articles = () => {
                     </ul>
                 </>
             )}
-        </>
+        </div>
     )
 }

@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { logIn } from "../../services/firebase";
+import { signUp } from "../../services/firebase";
 import { SignForm } from "../SignForm/main";
 import { Button } from "@mui/material";
 
-
-export const Home = () => {
-
+export const SignUp = () => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleSignIn =  async (email, pass) => {
+    const handleSignUp = async (email, pass) => {
         setLoading(true);
+        
         try {
-            await logIn(email, pass);
+            await signUp(email, pass);
         } catch (err) {
             console.log(err);
             setError(err.message);
@@ -24,12 +23,11 @@ export const Home = () => {
 
     return (
         <>
-           <h3>Welcome to Home!</h3>
-           <SignForm onSubmit={handleSignIn} error={error} loading={loading} />
-           <Link to="/signup"
+            <SignForm onSubmit={handleSignUp} error={error} loading={loading} />
+            <Link to="/"
             style={{textDecoration: 'none'}}>
-                <Button variant="outlined">Sign Up</Button>
+                <Button variant="outlined">Sign In</Button>
             </Link>
         </>
-    )
-}
+    );
+};

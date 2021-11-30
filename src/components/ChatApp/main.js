@@ -1,4 +1,3 @@
-
 import { useCallback } from 'react';
 import './chat.css';
 import { connect } from 'react-redux'
@@ -7,18 +6,22 @@ import { MessageList } from '../message';
 import { RenderChats } from '../ChatList/main';
 import { Navigate, useParams } from "react-router";
 import { addMessageWithThunk } from "../../store/messages/actions";
+import { getChatMsgsListRefById, getChatMsgsRefById } from "../../services/firebase";
+import { push } from "firebase/database";
 
-function Chat({ messages, sendMessage }) {
+
+function Chat({ msgs, sendMessage }) {
 
   const { chatId } = useParams();
   const handleSendMessage = useCallback(
     (newMessage) => { 
-      sendMessage(chatId, newMessage);
+      // sendMessage(chatId, newMessage);
+      push(getChatMsgsListRefById(chatId), newMessage);
     },
     [chatId, sendMessage]
   );
 
-  if (!messages[chatId]) {
+  if (!msgs[chatId]) {
     return <Navigate replace to="/chats/" />
   }
 
@@ -29,7 +32,7 @@ function Chat({ messages, sendMessage }) {
             <h3 className="text-list">Chat List</h3>
             <RenderChats />
         </div> 
-            <MessageList messages={messages[chatId]}/>
+            <MessageList messages={msgs[chatId]}/>
       </header>
       <main className="App-main">
         <GoodMessages onlyMessages={handleSendMessage}/>
