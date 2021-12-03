@@ -6,15 +6,11 @@ import {
   messagesRef,
   getChatMsgsListRefById
 } from "../../services/firebase";
-// import * as firebase from 'firebase';
 
 
 export const ADD_CHAT = "CHATS::ADD_CHAT";
 export const SET_CHATS = "CHATS::SET_CHATS";
 export const DELETE_CHAT = "CHATS::DELETE_CHAT";
-
-// export const db = firebase.database();
-
 
 
 export const addChat = (newChat) => ({
@@ -41,9 +37,8 @@ export const deleteChatWithFb = (id) => async () => {
   remove(getChatRefById(id), { empty: true });
 };
 
-
-
 export const initChatsTracking = () => (dispatch) => {
+  
   onValue(chatsRef, (chatsSnap) => {
     console.log(chatsSnap);
     const newChats = [];

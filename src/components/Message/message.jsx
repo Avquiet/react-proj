@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useRef } from 'react'
 import {v4 as uuid} from 'uuid';
 
- export const MessageList = ({ messages }) => {
+ export const MessageList = ({ message }) => {
 
         const messagesEndRef = useRef(null)
       
@@ -12,17 +12,15 @@ import {v4 as uuid} from 'uuid';
       
         useEffect(() => {
           scrollToBottom()
-        }, [messages]);
+        }, [message]);
 
     return (
         <div>
-            {messages.map((list) => (
-                <div className="msg-list" key={ uuid() }>
-                    <p className="author-text">{list.author}</p>
-                    <p className="list-text">{list.text}</p>
-                </div>
-                
-            ))}
+            <div className="msg-list" key={ uuid() }>
+                <p className="author-text">{message.author}</p>
+                <p className="list-text">{message.text}</p>
+            </div>
+    
             <div ref={messagesEndRef} />
         </div>
     )

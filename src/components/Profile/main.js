@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { useSelector, connect, shallowEqual } from 'react-redux';
 import { selectName } from "../../store/profile/selectors";
-import { changeName, signOut } from '../../store/profile/actions'
+import { changeName } from '../../store/profile/actions'
 import { Button, TextField } from '@mui/material';
 import { onValue, set } from "firebase/database";
 import { logOut, userRef } from "../../services/firebase";
 
-export const Profile = ({ setName, changeChecked }) => {
+export const Profile = ({ setName }) => {
 
     const name = useSelector(selectName, shallowEqual);
     const [value, setValue] = useState(name);

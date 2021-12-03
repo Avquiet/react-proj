@@ -1,4 +1,4 @@
-import { ADD_MSG } from './actions';
+import { ADD_MSG, DELETE_MSG } from './actions';
 import { ADD_CHAT, DELETE_CHAT } from "../chats/actions";
 
 const otherMessages = {}
@@ -10,6 +10,15 @@ export const messagesReducer = (state = otherMessages, { payload, type }) => {
         ...state,
         [payload.chatId]: [...state[payload.chatId], payload.message],
       };
+
+      case DELETE_MSG: {
+        const newMessages = { ...state };
+        newMessages[payload.chatId] = newMessages[payload.chatId].filter(
+          ({ id }) => id !== payload.idToDelete
+        );
+  
+        return newMessages;
+      }
 
     case ADD_CHAT:
       return {

@@ -2,11 +2,11 @@ import { useCallback } from 'react';
 import './chat.css';
 import { connect } from 'react-redux'
 import { GoodMessages } from '../Forms';
-import { MessageList } from '../message';
+import { MessageList } from '../Message/message';
 import { RenderChats } from '../ChatList/main';
 import { Navigate, useParams } from "react-router";
 import { addMessageWithThunk } from "../../store/messages/actions";
-import { getChatMsgsListRefById, getChatMsgsRefById } from "../../services/firebase";
+import { getChatMsgsListRefById } from "../../services/firebase";
 import { push } from "firebase/database";
 
 

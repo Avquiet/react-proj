@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { onValue } from "firebase/database";
 import { PrivateRoute } from "../PrivateRoute/main";
-import { PublicOutlet, PublicRoute } from "../PublicRoute/main";
+import { PublicOutlet } from "../PublicRoute/main";
 import { auth, messagesRef } from "../../services/firebase";
 import { signIn, signOut } from "../../store/profile/actions";
 import { SignUp } from "../SignUp/main";

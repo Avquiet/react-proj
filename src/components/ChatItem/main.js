@@ -1,7 +1,7 @@
 import { ListItem } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux"
-import { deleteChat } from "../../store/chats/actions";
+// import { deleteChat } from "../../store/chats/actions";
 import { Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
 import { useState } from "react";
 import { deleteChatWithFb } from "../../store/chats/actions";

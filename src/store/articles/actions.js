@@ -8,7 +8,7 @@ export const getArticlesLoading = () => ({
     type: REQUEST_ARTICLES_LOADING,
 });
 
-export const getArticlesSucces = (articles) => ({
+export const getArticlesSuccess = (articles) => ({
     type: REQUEST_ARTICLES_SUCCESS,
     payload: articles
 });
@@ -31,7 +31,7 @@ export const getArticles = () => async (dispatch) => {
         }
 
         const result = await response.json();
-        dispatch(getArticlesSucces(result));
+        dispatch(getArticlesSuccess(result));
 
     } catch(err) {
         console.warn(err);
