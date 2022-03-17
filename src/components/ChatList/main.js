@@ -6,23 +6,12 @@ import { selectChats } from "../../store/chats/selectors";
 import List from '@mui/material/List';
 import { ListItem, TextField, Button, Dialog, DialogTitle } from '@mui/material';
 import { ChatItem } from "../ChatItem/main";
-import { onValue, set } from "firebase/database";
-import {
-  addChat,
-  addChatWithFb,
-  initChatsTracking,
-} from "../../store/chats/actions";
-import {
-  chatsRef,
-  getChatMsgsRefById,
-  getChatRefById,
-} from "../../services/firebase";
-
+import { addChatWithFb, initChatsTracking } from "../../store/chats/actions";
 
 export const RenderChats = () => {
 
     const chatList = useSelector(selectChats);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [value, setValue] = useState("");
     
     useEffect(() => {
@@ -32,7 +21,6 @@ export const RenderChats = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
     }
-
 
     const [visible, setVisible] = useState(false);
     const handleClose = () => setVisible(false);
@@ -49,9 +37,10 @@ export const RenderChats = () => {
             {chatList.map((chat) => (
                 <List className="child-list" key={ uuid() } sx={{
                     textDecoration: 'none',
-                    border: '1px solid teal',
+                    border: '1px solid white',
                     marginBottom: '4px',
                     borderLeft: 'none',
+                    borderTop: 'none',
                     height: '80px',
                     }}>
                         <ListItem>

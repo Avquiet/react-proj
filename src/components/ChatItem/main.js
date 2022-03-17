@@ -1,10 +1,10 @@
 import { ListItem } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux"
-// import { deleteChat } from "../../store/chats/actions";
+import { useDispatch } from "react-redux";
 import { Button, Dialog, DialogTitle, DialogActions } from '@mui/material';
 import { useState } from "react";
 import { deleteChatWithFb } from "../../store/chats/actions";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 export const ChatItem = ({ chat }) => {
@@ -23,15 +23,15 @@ export const ChatItem = ({ chat }) => {
   return (
     <>
       <ListItem>
-        <NavLink
+        <NavLink class="link-item"
           style={({ isActive }) => ({ color: isActive ? "brown" : "teal" })}
           to={`/chats/${chat.id}`}
         >
-          <h3>{chat.name}</h3>
+          <h4>{chat.name}</h4>
         </NavLink>
       </ListItem>
-      <Button variant="contained" onClick={handleOpen}>
-        delete
+      <Button sx={{ padding: 0 }} variant="contained" onClick={handleOpen} type="submit">
+        <DeleteIcon />
       </Button>
       
       <Dialog open={visible} onClose={handleClose}>

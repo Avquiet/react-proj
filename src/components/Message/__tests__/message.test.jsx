@@ -1,25 +1,29 @@
-import { render, screen } from "@testing-library/react";
-import { MessageList } from "../message";
+import { render } from "@testing-library/react";
+import { Message } from "../message";
 
 describe("Message tests", () => {
-    it("renders author and text", () => {
-        const message = render(<MessageList message={{ text: "message", author: "author" }} />);
+  it("renders author and text", () => {
+    const message = render(<Message message={{ text: "messagetext", author: "author:" }} />);
 
-        const msgText = message.getByText("message");
-        const authorText = message.getByText("author");
-        expect(msgText).toBeInTheDocument();
-        expect(authorText).toBeInTheDocument();
-    });
+    const msgText = message.getByText("messagetext");
+    const authorText = message.getByText("author:");
+    expect(msgText).toBeInTheDocument();
+    expect(authorText).toBeInTheDocument();
+  });
 
-    it("matches snapshot with author", () => {
-        const message = render(<MessageList message={{ text: "message", author: "author" }} />);
+  // it("matches snapshot with author", () => {
+  //   const message = render(<Message message={{ text: "messagetext", author: "author:" }} />);
+    
+  //   expect(message).toMatchSnapshot();
+  // });
+  // it("matches snapshot with no author", () => {
+  //   const message = render(<Message message={{ text: "messagetext", author: "" }} />);
+    
+  //   expect(message).toMatchSnapshot();
+  // });
 
-        expect(message).toMatchSnapshot();
-    });
-
-    it("matches snapshot with no author", () => {
-        const message = render(<MessageList message={{ text: "message", author: "author" }}/ >);
-
-        expect(message).toMatchSnapshot();
-    });
+  // it('matches snapshot scroll check', () => {
+  //   const messagesEndRef = render(<div ref={messagesEndRef} />);
+  //   expect(messagesEndRef).toMatchSnapshot();
+  // });
 });

@@ -5,19 +5,19 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
 export const GoodMessages = ({ onlyMessages }) => {
-    const [value, setValue] = useState([]);
+    const [value, setValue] = useState('');
     const inputFocus = useRef();
 
     const handleChange = (e) => {
         setValue(e.target.value);
     }
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         onlyMessages({
             author: authors.user,
             text: value,
             id: `list-${Date.now()}`
-        })
+        });
 
         setValue('');
     }        
@@ -37,6 +37,5 @@ export const GoodMessages = ({ onlyMessages }) => {
              variant="filled" />
             <Button variant="contained" endIcon={<SendIcon />} disabled={!value} type="submit">Send</Button>
         </form>
-    )
-
-}
+    );
+};

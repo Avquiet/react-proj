@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useRef } from 'react'
 import {v4 as uuid} from 'uuid';
 
- export const MessageList = ({ message }) => {
+ export const Message = ({ message }) => {
 
         const messagesEndRef = useRef(null)
       

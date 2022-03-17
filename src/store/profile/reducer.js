@@ -1,7 +1,7 @@
 import { CHANGE_NAME, SIGN_IN, SIGN_OUT } from "./actions";
 
 const initialState = {
-    name: 'Default',
+    name: '',
     authed: false
 };
 

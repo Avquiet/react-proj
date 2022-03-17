@@ -1,24 +1,22 @@
 import { useCallback } from 'react';
 import './chat.css';
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { GoodMessages } from '../Forms';
-import { MessageList } from '../Message/message';
+import { MessageList } from '../MessageList/MessageList';
 import { RenderChats } from '../ChatList/main';
 import { Navigate, useParams } from "react-router";
-import { addMessageWithThunk } from "../../store/messages/actions";
-import { getChatMsgsListRefById } from "../../services/firebase";
-import { push } from "firebase/database";
+import { addMessageWithReply } from "../../store/messages/actions";
 
-
-function Chat({ msgs, sendMessage }) {
-
+function Chat({ msgs }) {
+  const dispatch = useDispatch();
   const { chatId } = useParams();
   const handleSendMessage = useCallback(
     (newMessage) => { 
-      // sendMessage(chatId, newMessage);
-      push(getChatMsgsListRefById(chatId), newMessage);
+      dispatch(addMessageWithReply(chatId, newMessage));
+    //  sendMessage(chatId, newMessage);
+    //  push(getChatMsgsListRefById(chatId), newMessage);
     },
-    [chatId, sendMessage]
+    [chatId, dispatch]
   );
 
   if (!msgs[chatId]) {
@@ -29,7 +27,7 @@ function Chat({ msgs, sendMessage }) {
     <div className="App">
       <header className="App-header">
         <div className="item-chat">
-            <h3 className="text-list">Chat List</h3>
+            <h3 className="text-list">Chats</h3>
             <RenderChats />
         </div> 
             <MessageList messages={msgs[chatId]}/>
@@ -44,15 +42,15 @@ function Chat({ msgs, sendMessage }) {
 export default Chat;
 
 
-const mapStateToProps = (state) => ({
-  messages: state.messages,
-});
+// const mapStateToProps = (state) => ({
+//   messages: state.messages,
+// });
 
-const mapDispatchToProps = {
-  sendMessage: addMessageWithThunk,
-};
+// const mapDispatchToProps = {
+//   sendMessage: addMessageWithReply,
+// };
 
-export const ConnectedChats = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Chat);
+// export const ConnectedChats = connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(Chat);

@@ -3,8 +3,6 @@ import {
   chatsRef,
   getChatMsgsRefById,
   getChatRefById,
-  messagesRef,
-  getChatMsgsListRefById
 } from "../../services/firebase";
 
 
@@ -34,7 +32,7 @@ export const addChatWithFb = (newChat) => async () => {
 };
 
 export const deleteChatWithFb = (id) => async () => {
-  remove(getChatRefById(id), { empty: true });
+  remove(getChatRefById(id));
 };
 
 export const initChatsTracking = () => (dispatch) => {

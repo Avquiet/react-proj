@@ -1,8 +1,9 @@
 import { authors } from '../../utils/constants';
-import { onValue, set, remove } from "firebase/database";
-import {
-  messagesRef
-} from "../../services/firebase";
+import { remove } from "firebase/database";
+import { messagesRef } from "../../services/firebase";
+import { getChatMsgsListRefById } from "../../services/firebase";
+import { push } from "firebase/database";
+import { getChatMsgsRefById } from "../../services/firebase"
 
 export const ADD_MSG = 'MESSAGES::ADD_MSG'
 export const DELETE_MSG = "MESSAGES::DELETE_MSG";
@@ -22,29 +23,27 @@ export const deleteMessage = (chatId, idToDelete) => ({
 
 let timeout;
 
-export const addMessageWithThunk = (chatId, message) => (dispatch) => {
+export const addMessageWithReply = (chatId, message) => (dispatch) => {
   dispatch(addMessage(chatId, message));
+  push(getChatMsgsListRefById(chatId), message);
 
-  set(messagesRef, (chatsSnap) => {
-    if (message.author !== authors.bot) {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-      timeout = setTimeout(() => {
-        const botMsg = {
-          author: authors.bot,
-          text: "Hello dear USER please write any message",
-          id: `list-${Date.now()}`
-        }
-        dispatch(addMessage(chatId, botMsg))
-      },  3000);
-      console.log(chatsSnap);
-      const newMessages = [];
-  
-      chatsSnap.forEach((snapshot) => {
-        newMessages.push(snapshot.val());
-      });
-  
+  if (message.author !== authors.bot) {
+    if (timeout) {
+      clearTimeout(timeout);
     }
-  })
-}
+
+    timeout = setTimeout(() => {
+      const botMessage = {
+        author: authors.bot,
+        id: `list-${Date.now()}`,
+        text: "Hello, dear user!",
+      };
+      dispatch(addMessage(chatId, botMessage));
+      push(getChatMsgsListRefById(chatId), botMessage);
+    }, 3000);
+  };
+};
+
+export const deleteMsgWithFb = (chatId, idToDelete) => async () => {
+  remove(getChatMsgsListRefById(chatId, idToDelete));
+};

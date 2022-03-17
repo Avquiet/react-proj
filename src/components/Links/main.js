@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router";
 import { BrowserRouter, Link } from "react-router-dom";
 import { RenderChats } from "../ChatList/main";
-import { ConnectedChats } from "../ChatApp/main";
+//import { ConnectedChats } from "../ChatApp/main";
 import { Home } from "../Home/main";
 import { Articles } from "../Articles/main";
 import { ConnectedProfile } from "../Profile/main";
@@ -13,6 +13,7 @@ import { PublicOutlet } from "../PublicRoute/main";
 import { auth, messagesRef } from "../../services/firebase";
 import { signIn, signOut } from "../../store/profile/actions";
 import { SignUp } from "../SignUp/main";
+import Chat from "../ChatApp/main";
 
 export const LinkItem = () => {
     const dispatch = useDispatch();
@@ -90,12 +91,13 @@ export const LinkItem = () => {
             path=":chatId"
             element={
               <PrivateRoute>
-                <ConnectedChats msgs={msgs} />
+                {/* <ConnectedChats msgs={msgs} /> */}
+                <Chat msgs={msgs} />
               </PrivateRoute>
             }
           />
         </Route>
-        <Route path="*" element={<h3>404</h3>} />
+        <Route path="*" element={<h3 style={{ color: "red" }}>Page Not Found<br></br>404</h3>} />
       </Routes>
     </BrowserRouter>
 
