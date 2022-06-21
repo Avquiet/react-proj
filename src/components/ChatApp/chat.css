@@ -81,9 +81,9 @@
   }
   
   .list-text {
-    width: 155px;
+    /* width: 155px; */
     text-align: center;
-    padding: 5px;
+    padding: 10px;
     margin-bottom: 20px;
     background-color: #3498db;
     margin-top: 20px;

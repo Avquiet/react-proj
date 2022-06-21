@@ -1,9 +1,7 @@
 import { authors } from '../../utils/constants';
 import { remove } from "firebase/database";
-import { messagesRef } from "../../services/firebase";
 import { getChatMsgsListRefById } from "../../services/firebase";
 import { push } from "firebase/database";
-import { getChatMsgsRefById } from "../../services/firebase"
 
 export const ADD_MSG = 'MESSAGES::ADD_MSG'
 export const DELETE_MSG = "MESSAGES::DELETE_MSG";

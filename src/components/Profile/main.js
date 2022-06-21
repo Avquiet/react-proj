@@ -41,13 +41,12 @@ export const Profile = ({ setName }) => {
 
   return (
     <>
-      
-      <form onSubmit={handleSubmit}>
-      <h3>Welcome, {value}</h3>
-        <TextField type="text" value={value} onChange={handleChangeText}></TextField>
+      <form onSubmit={handleSubmit} style={{ marginTop: 30, marginLeft: 30 }}>
+      {value && <h3 style={{ marginBottom: 15 }}>Welcome, {value}</h3>}
+        <TextField type="text" value={value} onChange={handleChangeText} label="Enter Your Name"></TextField>
         <TextField type="submit"></TextField>
       </form>
-      <Button onClick={handleLogOutClick}>SIGN OUT</Button>
+      <Button onClick={handleLogOutClick} style={{ marginTop: 10, marginLeft: 30 }}>SIGN OUT</Button>
     </>
   )
 }

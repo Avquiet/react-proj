@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router";
 import { BrowserRouter, Link } from "react-router-dom";
 import { RenderChats } from "../ChatList/main";
-//import { ConnectedChats } from "../ChatApp/main";
 import { Home } from "../Home/main";
 import { Articles } from "../Articles/main";
 import { ConnectedProfile } from "../Profile/main";
@@ -16,55 +15,49 @@ import { SignUp } from "../SignUp/main";
 import Chat from "../ChatApp/main";
 
 export const LinkItem = () => {
-    const dispatch = useDispatch();
-    const [msgs, setMsgs] = useState({});
+  const dispatch = useDispatch();
+  const [msgs, setMsgs] = useState([]);
 
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                dispatch(signIn());
-            } else {
-                dispatch(signOut());
-            }
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      user ? dispatch(signIn()) : dispatch(signOut());   
+    });
+
+    return () => unsubscribe();
+  }, [dispatch]);
+
+
+  useEffect(() => {
+    onValue(messagesRef, (snapshot) => {
+      const newMsgs = [];
+        snapshot.forEach((chatMsgsSnap) => {
+          newMsgs[chatMsgsSnap.key] = Object.values(
+            chatMsgsSnap.val().messageList || []
+          );
         });
-
-        return () => unsubscribe();
-    }, []);
-
-
-    useEffect(() => {
-        onValue(messagesRef, (snapshot) => {
-            const newMsgs = {};
-
-            snapshot.forEach((chatMsgsSnap) => {
-                newMsgs[chatMsgsSnap.key] = Object.values(
-                    chatMsgsSnap.val().messageList || {}
-                );
-            });
-
-            setMsgs(newMsgs);
-        });
+        setMsgs(newMsgs);
+      });
     }, []);
     
     return (
-        <BrowserRouter>
+      <BrowserRouter>
         <ul className="hash-main">
-            <li>
-                <Link className="hash-child" to="/">Home</Link>
-            </li>
-            <li>
-                <Link className="hash-child" to="/chats">Chats</Link>
-            </li>
-            <li>
-                <Link className="hash-child" to="/profile">Profile</Link>
-            </li>
-            <li>
-                <Link className="hash-child" to="/articles">Articles</Link>
-            </li>
+          <li>
+            <Link className="hash-child" to="/">Home</Link>
+          </li>
+          <li>
+            <Link className="hash-child" to="/chats">Chats</Link>
+          </li>
+          <li>
+            <Link className="hash-child" to="/profile">Profile</Link>
+          </li>
+          <li>
+            <Link className="hash-child" to="/articles">Articles</Link>
+          </li>
         </ul>
         <Routes>
-            <Route path="/" element={<PublicOutlet />}>
-            <Route path="" element={<Home />} />
+          <Route path="/" element={<PublicOutlet />}>
+          <Route path="" element={<Home />} />
         </Route>
         <Route path="/signup" element={<PublicOutlet />}>
           <Route path="" element={<SignUp />} />
@@ -91,7 +84,6 @@ export const LinkItem = () => {
             path=":chatId"
             element={
               <PrivateRoute>
-                {/* <ConnectedChats msgs={msgs} /> */}
                 <Chat msgs={msgs} />
               </PrivateRoute>
             }
@@ -100,6 +92,5 @@ export const LinkItem = () => {
         <Route path="*" element={<h3 style={{ color: "red" }}>Page Not Found<br></br>404</h3>} />
       </Routes>
     </BrowserRouter>
-
-    )
+  )
 };

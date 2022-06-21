@@ -23,8 +23,8 @@ export const ChatItem = ({ chat }) => {
   return (
     <>
       <ListItem>
-        <NavLink class="link-item"
-          style={({ isActive }) => ({ color: isActive ? "brown" : "teal" })}
+        <NavLink className="link-item"
+          style={({ isActive }) => ({ color: isActive ? "brown" : "teal", textDecoration: 'none' })}
           to={`/chats/${chat.id}`}
         >
           <h4>{chat.name}</h4>
@@ -41,6 +41,6 @@ export const ChatItem = ({ chat }) => {
           <Button variant="contained" type="submit" onClick={handleDeleteClick}>Delete</Button>
         </DialogActions>
       </Dialog>
-   </>
+    </>
   );
 };
