@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# Made with React.js
+
+Chat with a built-in bot, messages are not limited. 
+
+Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
